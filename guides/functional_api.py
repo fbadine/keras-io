@@ -162,7 +162,7 @@ For further reading, see the [training and evaluation](/guides/training_with_bui
 ## Save and serialize
 
 Saving the model and serialization work the same way for models built using
-the functional API as they do for `Sequential` models. To standard way
+the functional API as they do for `Sequential` models. The standard way
 to save a functional model is to call `model.save()`
 to save the entire model as a single file. You can later recreate the same model
 from this file, even if the code that built the model is no longer available.
@@ -300,7 +300,7 @@ ensemble_model = keras.Model(inputs=inputs, outputs=outputs)
 The functional API makes it easy to manipulate multiple inputs and outputs.
 This cannot be handled with the `Sequential` API.
 
-For example, if you're building a system for ranking custom issue tickets by
+For example, if you're building a system for ranking customer issue tickets by
 priority and routing them to the correct department,
 then the model will have three inputs:
 
@@ -422,8 +422,8 @@ For more detailed explanation, refer to the [training and evaluation](/guides/tr
 
 In addition to models with multiple inputs and outputs,
 the functional API makes it easy to manipulate non-linear connectivity
-topologies -- these are models with layers that are not connected sequentially.
-Something the `Sequential` API can not handle.
+topologies -- these are models with layers that are not connected sequentially,
+which the `Sequential` API can not handle.
 
 A common use case for this is residual connections.
 Let's build a toy ResNet model for CIFAR10 to demonstrate this:
@@ -543,7 +543,7 @@ extracted_features = feat_extraction_model(img)
 
 """
 This comes in handy for tasks like
-[neural style transfer](https://www.tensorflow.org/tutorials/generative/style_transfer),
+[neural style transfer](https://keras.io/examples/generative/neural_style_transfer/),
 among other things.
 """
 
@@ -632,7 +632,7 @@ config = model.get_config()
 new_model = keras.Model.from_config(config, custom_objects={"CustomDense": CustomDense})
 
 """
-Optionally, implement the classmethod `from_config(cls, config)` which is used
+Optionally, implement the class method `from_config(cls, config)` which is used
 when recreating a layer instance given its config dictionary.
 The default implementation of `from_config` is:
 

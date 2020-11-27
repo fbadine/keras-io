@@ -27,20 +27,20 @@ Are you a machine learning engineer looking to use Keras
 to ship deep-learning powered features in real products? This guide will serve
 as your first introduction to core Keras API concepts.
 
-In this guide, you will learn about:
+In this guide, you will learn how to:
 
-- How to prepare your data before training a model (by turning it into either NumPy
+- Prepare your data before training a model (by turning it into either NumPy
  arrays or `tf.data.Dataset` objects).
-- How to do data preprocessing, for instance feature normalization or vocabulary
+- Do data preprocessing, for instance feature normalization or vocabulary
  indexing.
-- How to build a model that turns your data into useful predictions,
+- Build a model that turns your data into useful predictions,
 using the Keras Functional API.
-- How to train your model with the built-in Keras `fit()` method, while being
+- Train your model with the built-in Keras `fit()` method, while being
 mindful of checkpointing, metrics monitoring, and fault tolerance.
-- How to evaluate your model on a test data and how to use it for inference on new data.
-- How to customize what `fit()` does, for instance to build a GAN.
-- How to speed up training by leveraging multiple GPUs.
-- How to refine your model through hyperparameter tuning.
+- Evaluate your model on a test data and how to use it for inference on new data.
+- Customize what `fit()` does, for instance to build a GAN.
+- Speed up training by leveraging multiple GPUs.
+- Refine your model through hyperparameter tuning.
 
 At the end of this guide, you will get pointers to end-to-end examples to solidify
  these concepts:
@@ -85,7 +85,7 @@ these formats. If you have a large dataset and you are training on GPU(s), consi
 using `Dataset` objects, since they will take care of performance-critical details,
  such as:
 
-- Asynchronously preprocessing your data on CPU while your GPU is busy, and bufferring
+- Asynchronously preprocessing your data on CPU while your GPU is busy, and buffering
  it into a queue.
 - Prefetching data on GPU memory so it's immediately available when the GPU has
  finished processing the previous batch, so you can reach full GPU utilization.
@@ -295,7 +295,7 @@ print("mean: %.4f" % np.mean(normalized_data))
 <div class="k-default-codeblock">
 ```
 var: 1.0000
-mean: 0.0000
+mean: -0.0000
 
 ```
 </div>
@@ -357,7 +357,7 @@ specify it as `None`. For instance, an input for 200x200 RGB image would have sh
 inputs = keras.Input(shape=(None, None, 3))
 ```
 
-After defining your input(s), you chain layer transformations on top of your inputs,
+After defining your input(s), you can chain layer transformations on top of your inputs,
  until your final output:
 
 
@@ -421,7 +421,7 @@ model.summary()
 
 <div class="k-default-codeblock">
 ```
-Model: "functional_1"
+Model: "model"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -504,7 +504,7 @@ Here's what fitting a model looks like with a dataset:
 model.fit(dataset_of_samples_and_labels, epochs=10)
 ```
 
-Since the data yielded by a dataset is expect to be already batched, you don't need to
+Since the data yielded by a dataset is expected to be already batched, you don't need to
  specify the batch size here.
 
 Let's look at it in practice with a toy example model that learns to classify MNIST
@@ -541,7 +541,7 @@ history = model.fit(dataset, epochs=1)
 
 <div class="k-default-codeblock">
 ```
-Model: "functional_3"
+Model: "model_1"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -562,9 +562,9 @@ Trainable params: 118,282
 Non-trainable params: 0
 _________________________________________________________________
 Fit on NumPy data
-938/938 [==============================] - 1s 1ms/step - loss: 0.2671
+938/938 [==============================] - 1s 940us/step - loss: 0.4771
 Fit on Dataset
-938/938 [==============================] - 1s 1ms/step - loss: 0.1156
+938/938 [==============================] - 1s 942us/step - loss: 0.1138
 
 ```
 </div>
@@ -580,7 +580,7 @@ print(history.history)
 
 <div class="k-default-codeblock">
 ```
-{'loss': [0.11557048559188843]}
+{'loss': [0.11384169012308121]}
 
 ```
 </div>
@@ -611,7 +611,7 @@ history = model.fit(dataset, epochs=1)
 
 <div class="k-default-codeblock">
 ```
-938/938 [==============================] - 1s 1ms/step - loss: 0.0801 - acc: 0.9760
+938/938 [==============================] - 1s 929us/step - loss: 0.0835 - acc: 0.9748
 
 ```
 </div>
@@ -628,7 +628,7 @@ history = model.fit(dataset, epochs=1, validation_data=val_dataset)
 
 <div class="k-default-codeblock">
 ```
-938/938 [==============================] - 1s 1ms/step - loss: 0.0547 - acc: 0.9835 - val_loss: 0.1121 - val_acc: 0.9671
+938/938 [==============================] - 1s 1ms/step - loss: 0.0563 - acc: 0.9829 - val_loss: 0.1041 - val_acc: 0.9692
 
 ```
 </div>
@@ -713,8 +713,8 @@ print("acc: %.2f" % acc)
 
 <div class="k-default-codeblock">
 ```
-157/157 [==============================] - 0s 667us/step - loss: 0.1121 - acc: 0.9671
-loss: 0.11
+157/157 [==============================] - 0s 688us/step - loss: 0.1041 - acc: 0.9692
+loss: 0.10
 acc: 0.97
 
 ```
@@ -899,9 +899,9 @@ model.fit(dataset)
 
 <div class="k-default-codeblock">
 ```
-1/1 [==============================] - 0s 867us/step - loss: 0.5251
+1/1 [==============================] - 0s 13ms/step - loss: 0.5028
 
-<tensorflow.python.keras.callbacks.History at 0x183298190>
+<tensorflow.python.keras.callbacks.History at 0x147777490>
 
 ```
 </div>
@@ -925,9 +925,9 @@ model.fit(dataset)
 
 <div class="k-default-codeblock">
 ```
-1/1 [==============================] - 0s 894us/step - loss: 0.5090
+1/1 [==============================] - 0s 16ms/step - loss: 0.5258
 
-<tensorflow.python.keras.callbacks.History at 0x1832e8890>
+<tensorflow.python.keras.callbacks.History at 0x1477b1910>
 
 ```
 </div>
@@ -982,7 +982,7 @@ def build_model(hp):
 
 The function should return a compiled model.
 
-Next, instantiate a tuner object specifying your optimiation objective and other search
+Next, instantiate a tuner object specifying your optimization objective and other search
  parameters:
 
 
